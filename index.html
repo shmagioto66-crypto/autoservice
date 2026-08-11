@@ -3,163 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProAuto - ავტონაწილები და ადგილზე სერვისი</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>ProAuto - პროფესიონალური ავტოსერვისი</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --primary: #ff334b; 
+            --primary-glow: rgba(255, 51, 75, 0.3);
+            --dark: #0a0a0a; 
+            --surface: rgba(20, 20, 20, 0.85);
+            --border: rgba(255, 255, 255, 0.1); 
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Outfit', sans-serif; background: var(--dark); color: #fff; overflow-x: hidden; }
+        
+        /* ჰედერი */
+        .header { 
+            background: rgba(10, 10, 10, 0.85); 
+            backdrop-filter: blur(12px); 
+            border-bottom: 1px solid var(--border); 
+            padding: 18px 0; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            z-index: 1000; 
+        }
+        .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 30px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { font-size: 22px; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: 0.5px; }
+        .logo span { color: var(--primary); }
+        
+        .fb-link { 
+            color: #b0b0b0; 
+            text-decoration: none; 
+            font-size: 14px; 
+            font-weight: 500; 
+            transition: color 0.2s ease; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        .fb-link:hover { color: #fff; }
+        .fb-link span { color: #1877f2; font-weight: 600; }
+
+        .btn-nav { 
+            background: var(--primary); 
+            color: #fff; 
+            padding: 10px 22px; 
+            border-radius: 8px; 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 14px; 
+            transition: all 0.25s ease; 
+            box-shadow: 0 4px 20px var(--primary-glow);
+        }
+        .btn-nav:hover { background: #e0283c; transform: translateY(-1px); }
+
+        /* მთავარი ეკრანი */
+        .hero { 
+            background: linear-gradient(135deg, rgba(10,10,10,0.75), rgba(10,10,10,0.55)), url('https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=1920&q=85'); 
+            background-size: cover; 
+            background-position: center; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 140px 20px 80px;
+        }
+        .hero-content { max-width: 850px; margin-bottom: 50px; }
+        .hero-content h1 { font-size: 52px; font-weight: 700; margin: 0 0 20px; line-height: 1.15; letter-spacing: -0.5px; }
+        .hero-content p { color: #cccccc; font-size: 18px; margin-bottom: 35px; line-height: 1.6; }
+        
+        .hero-btn { 
+            background: var(--primary); 
+            color: #fff; 
+            padding: 16px 36px; 
+            border-radius: 10px; 
+            text-decoration: none; 
+            font-size: 16px; 
+            font-weight: 600; 
+            transition: all 0.25s ease; 
+            display: inline-block;
+            box-shadow: 0 6px 25px var(--primary-glow);
+        }
+        .hero-btn:hover { background: #e0283c; transform: translateY(-2px); }
+
+        /* კატეგორიების ბლოკი */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            width: 100%;
+            margin-bottom: 60px;
+        }
+        .category-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .category-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 51, 75, 0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .category-card h3 { margin: 0 0 10px; font-size: 17px; font-weight: 500; color: #ddd; }
+        .category-card span { color: var(--primary); font-weight: 700; font-size: 18px; }
+
+        /* უპირატესობების სექცია (შეცვლილი ტექსტებით) */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            width: 100%;
+            text-align: left;
+        }
+        .feature-box {
+            background: rgba(15, 15, 15, 0.6);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .feature-box h4 { font-size: 16px; margin-bottom: 6px; color: #fff; }
+        .feature-box p { font-size: 13px; color: #aaa; line-height: 1.5; }
+
+        @media (max-width: 850px) {
+            .categories, .features { grid-template-columns: 1fr; max-width: 400px; }
+            .hero-content h1 { font-size: 36px; }
+            .fb-link { display: none; }
+        }
+    </style>
 </head>
 <body>
 
     <!-- ჰედერი -->
     <header class="header">
-        <div class="container nav-container">
-            <a href="#" class="logo">Pro<span>Auto</span></a>
-            <nav class="nav">
-                <a href="#shop">კატალოგი</a>
-                <a href="#services">ადგილზე შეცვლა</a>
-                <a href="#booking" class="btn-nav">ჯავშანი</a>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Pro<span>Auto</span></a>
+            
+            <a href="https://www.facebook.com/saba.targaladze" target="_blank" class="fb-link">
+                ეწვიეთ ჩვენს <span>Facebook</span> გვერდს
+            </a>
+
+            <nav class="nav-links">
+                <a href="booking.html" class="btn-nav">ვიზიტის დაჯავშნა</a>
             </nav>
         </div>
     </header>
 
-    <!-- მთავარი ბანერი -->
+    <!-- მთავარი ბანერი და კატეგორიები -->
     <section class="hero">
-        <div class="container hero-content">
-            <h1>პროფესიონალური ზეთები, ხუნდები და ადგილზე სერვისი</h1>
-            <p>შეიძინეთ მაღალი ხარისხის ავტონაწილები და ისარგებლეთ პროფესიონალური ადგილზე შეცვლის სერვისით.</p>
-            <a href="#booking" class="btn-primary">ვიზიტის დაჯავშნა</a>
+        <div class="hero-content">
+            <h1>პროფესიონალური ავტოსერვისი ადგილზე</h1>
+            <p>შეიძინეთ უმაღლესი ხარისხის ზეთები, ხუნდები და მიიღეთ სწრაფი, გარანტირებული მომსახურება თქვენი ავტომობილისთვის.</p>
+            <a href="booking.html" class="hero-btn">ვიზიტის დაჯავშნა</a>
         </div>
-    </section>
 
-    <!-- პროდუქტების კატალოგი -->
-    <section id="shop" class="section">
-        <div class="container">
-            <h2 class="section-title">პოპულარული პროდუქტები</h2>
-            <div class="products-grid">
-                
-                <!-- პროდუქტი 1 -->
-                <div class="product-card">
-                    <div class="product-badge">ხუნდები</div>
-                    <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=600&q=80" alt="ხუნდები">
-                    </div>
-                    <div class="product-info">
-                        <h3>ბრეკეტის ხუნდები (წინა)</h3>
-                        <p class="product-desc">უმაღლესი ხარისხი, უხმაურო და მედეგი.</p>
-                        <div class="price-box">
-                            <span class="price">150 ₾</span>
-                            <span class="service-note">✓ შესაძლებელია ადგილზე შეცვლა</span>
-                        </div>
-                        <a href="#booking" class="btn-card">შეძენა / შეცვლა</a>
-                    </div>
-                </div>
+        <!-- პროდუქტების კატეგორიები -->
+        <div class="categories">
+            <div class="category-card">
+                <h3>ხუნდები</h3>
+                <span>150 ₾-დან</span>
+            </div>
+            <div class="category-card">
+                <h3>Motul ზეთი</h3>
+                <span>180 ₾</span>
+            </div>
+            <div class="category-card">
+                <h3>Castrol ზეთი</h3>
+                <span>165 ₾</span>
+            </div>
+        </div>
 
-                <!-- პროდუქტი 2 -->
-                <div class="product-card">
-                    <div class="product-badge">ძრავის ზეთი</div>
-                    <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1635840620615-77983616235b?auto=format&fit=crop&w=600&q=80" alt="Motul ზეთი">
-                    </div>
-                    <div class="product-info">
-                        <h3>Motul 8100 X-cess 5W-40 (5ლ)</h3>
-                        <p class="product-desc">სინთეტიკური ძრავის ზეთი თანამედროვე ავტომობილებისთვის.</p>
-                        <div class="price-box">
-                            <span class="price">180 ₾</span>
-                            <span class="service-note">✓ ადგილზე შეცვლის სერვისით</span>
-                        </div>
-                        <a href="#booking" class="btn-card">შეძენა / შეცვლა</a>
-                    </div>
-                </div>
-
-                <!-- პროდუქტი 3 -->
-                <div class="product-card">
-                    <div class="product-badge">ძრავის ზეთი</div>
-                    <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=600&q=80" alt="Castrol ზეთი">
-                    </div>
-                    <div class="product-info">
-                        <h3>Castrol Edge 5W-30 LL (4ლ)</h3>
-                        <p class="product-desc">მაქსიმალური დაცვა და ძრავის სისუფთავე.</p>
-                        <div class="price-box">
-                            <span class="price">165 ₾</span>
-                            <span class="service-note">✓ ადგილზე შეცვლის სერვისით</span>
-                        </div>
-                        <a href="#booking" class="btn-card">შეძენა / შეცვლა</a>
-                    </div>
-                </div>
-
+        <!-- განახლებული უპირატესობების სექცია -->
+        <div class="features">
+            <div class="feature-box">
+                <h4>🛠️ პროფესიონალური სერვისი</h4>
+                <p>მაღალიკვალიფიციური მომსახურება და ზუსტი მუშაობა თქვენი მანქანის უსაფრთხოებისთვის.</p>
+            </div>
+            <div class="feature-box">
+                <h4>🛡️ გარანტირებული ხარისხი</h4>
+                <p>ვიყენებთ მხოლოდ ორიგინალ და სერტიფიცირებულ პროდუქციას.</p>
+            </div>
+            <div class="feature-box">
+                <h4>⏱️ სწრაფი რეაგირება</h4>
+                <p>ოპერატიული დაჯავშნა და დროის მაქსიმალური ეკონომია თქვენთვის.</p>
             </div>
         </div>
     </section>
-
-    <!-- სერვისის უპირატესობები -->
-    <section id="services" class="section dark-bg">
-        <div class="container">
-            <h2 class="section-title">რატომ ჩვენი სერვისი?</h2>
-            <div class="features-grid">
-                <div class="feature-box">
-                    <h3>⚡ სწრაფი მომსახურება</h3>
-                    <p>ზეთისა და ხუნდების შეცვლას სჭირდება მხოლოდ 15-30 წუთი.</p>
-                </div>
-                <div class="feature-box">
-                    <h3>🛠️ პროფესიონალური ხელსაწყოები</h3>
-                    <p>ზუსტი დიაგნოსტიკა და გამოცდილი მექანიკოსები.</p>
-                </div>
-                <div class="feature-box">
-                    <h3>💎 გარანტირებული ხარისხი</h3>
-                    <p>მხოლოდ ორიგინალი პროდუქცია სანდო ბრენდებისგან.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- დაჯავშნის სექცია -->
-    <section id="booking" class="section">
-        <div class="container booking-container">
-            <h2 class="section-title">ვიზიტის დაჯავშნა</h2>
-            <p class="section-sub">მიუთითეთ თქვენი მონაცემები და ჩვენ დაგიკავშირდებით დეტალების დასაზუსტებლად.</p>
-            
-            <form id="bookingForm" class="booking-form" action="https://script.google.com/macros/s/AKfycbwUQM4EGdLgNk3-YTHhPIgJ07dxPgCjBah5exVzeZOqwvK7X1xJml3PFXttoFtgfwbk/exec" method="POST">
-                <div class="form-group">
-                    <label>სახელი</label>
-                    <input type="text" name="name" placeholder="თქვენი სახელი" required>
-                </div>
-                <div class="form-group">
-                    <label>ტელეფონის ნომერი</label>
-                    <input type="tel" name="phone" placeholder="+995 5XX XX XX XX" required>
-                </div>
-                <div class="form-group">
-                    <label>მანქანის მოდელი</label>
-                    <input type="text" name="car" placeholder="მაგ: BMW F30 320" required>
-                </div>
-                <div class="form-group">
-                    <label>სასურველი სერვისი / პროდუქტი</label>
-                    <select name="service" required>
-                        <option value="" disabled selected>აირჩიეთ სერვისი</option>
-                        <option value="ზეთის შეცვლა">ზეთის შეცვლა</option>
-                        <option value="ხუნდების შეცვლა">ხუნდების შეცვლა</option>
-                        <option value="ზეთი + ხუნდები">ზეთი + ხუნდები</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn-primary full-width">ჯავშნის გაგზავნა</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- ფუტერი -->
-    <footer>
-        <div class="container footer-content">
-            <p>&copy; 2026 ProAuto. ყველა უფლება დაცულია.</p>
-            <p>მისამართი: თბილისი | ტელ: +995 (32) 2XX XX XX</p>
-            
-            <div class="social-links">
-                <a href="https://www.facebook.com/saba.targaladze" target="_blank" class="social-icon" title="Facebook">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </footer>
 
 </body>
 </html>
